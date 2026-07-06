@@ -109,8 +109,7 @@
    "fieldtype": "Link",
    "label": "Ticket Raised By",
    "options": "User",
-   "read_only": 1,
-   "reqd": 1
+   "read_only": 1
   },
   {
    "fieldname": "created_on",
@@ -170,7 +169,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-05 23:44:38.514371",
+ "modified": "2026-07-06 13:23:58.454189",
  "modified_by": "Administrator",
  "module": "Help desk system",
  "name": "Tickets Hd",
