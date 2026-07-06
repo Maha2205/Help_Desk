@@ -256,3 +256,7 @@ app_license = "mit"
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
 
+permission_query_conditions = {
+    "Tickets Hd": "helpdesk_system.permissions.get_ticket_permission_query"
+}
+
