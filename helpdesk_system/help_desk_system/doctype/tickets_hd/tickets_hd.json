@@ -1,19 +1,30 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "naming_series:",
  "creation": "2026-07-02 17:52:19.214688",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "section_break_aqtv",
+  "naming_series",
   "subject",
   "description",
   "customer",
   "project",
+  "support_type",
   "status",
   "priority",
   "assigned_agent",
-  "assigned_developer"
+  "assigned_developer",
+  "ticket_raised_by",
+  "created_on",
+  "assigned_on",
+  "resolved_on",
+  "closed_on",
+  "resolution_details",
+  "customer_feedback",
+  "reopen_reason"
  ],
  "fields": [
   {
@@ -23,6 +34,7 @@
   {
    "fieldname": "subject",
    "fieldtype": "Data",
+   "in_filter": 1,
    "in_list_view": 1,
    "label": "Subject",
    "reqd": 1
@@ -35,20 +47,29 @@
    "reqd": 1
   },
   {
+   "default": "Open",
    "fieldname": "status",
    "fieldtype": "Link",
+   "in_filter": 1,
+   "in_standard_filter": 1,
    "label": "Status",
-   "options": "Status"
+   "options": "Status",
+   "reqd": 1
   },
   {
+   "default": "Medium",
    "fieldname": "priority",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Priority",
-   "options": "Priority"
+   "options": "Priority",
+   "reqd": 1
   },
   {
    "fieldname": "customer",
    "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
    "label": "Customer",
    "options": "Customer hd",
    "reqd": 1
@@ -56,6 +77,8 @@
   {
    "fieldname": "project",
    "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
    "label": "Project",
    "options": "Project hd",
    "reqd": 1
@@ -63,23 +86,94 @@
   {
    "fieldname": "assigned_agent",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Assigned Agent",
    "options": "User"
   },
   {
    "fieldname": "assigned_developer",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Assigned Developer",
    "options": "User"
+  },
+  {
+   "fieldname": "support_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Support Type",
+   "options": "Support Type"
+  },
+  {
+   "fieldname": "ticket_raised_by",
+   "fieldtype": "Link",
+   "label": "Ticket Raised By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "created_on",
+   "fieldtype": "Datetime",
+   "label": "Created On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "assigned_on",
+   "fieldtype": "Datetime",
+   "label": "Assigned On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "resolved_on",
+   "fieldtype": "Datetime",
+   "label": "Resolved On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "closed_on",
+   "fieldtype": "Datetime",
+   "label": "Closed On",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.status==\"Resolved\" || doc.status==\"Closed\"",
+   "fieldname": "resolution_details",
+   "fieldtype": "Text Editor",
+   "label": "Resolution Details",
+   "mandatory_depends_on": "eval:doc.status==\"Resolved\" || doc.status==\"Closed\"",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.status==\"Closed\"",
+   "fieldname": "customer_feedback",
+   "fieldtype": "Small Text",
+   "label": "Customer Feedback",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.status==\"Reopened\"",
+   "fieldname": "reopen_reason",
+   "fieldtype": "Small Text",
+   "label": "Reopen Reason",
+   "mandatory_depends_on": "eval:doc.status==\"Reopened\"",
+   "read_only": 1
+  },
+  {
+   "default": "TICK-.YYYY.-.#####",
+   "fieldname": "naming_series",
+   "fieldtype": "Data",
+   "label": "Series",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-03 15:03:33.865513",
+ "modified": "2026-07-06 13:23:58.454189",
  "modified_by": "Administrator",
  "module": "Help desk system",
  "name": "Tickets Hd",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
@@ -99,5 +193,7 @@
  "rows_threshold_for_grid_search": 20,
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "subject",
+ "track_changes": 1
 }

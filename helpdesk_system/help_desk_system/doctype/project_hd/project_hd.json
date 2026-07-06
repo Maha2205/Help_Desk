@@ -9,25 +9,27 @@
   "naming_series",
   "project_name",
   "customer_hd",
+  "support_type",
   "status",
   "start_date",
-  "end_date"
+  "end_date",
+  "project_manager",
+  "default_developer",
+  "description"
  ],
  "fields": [
   {
+   "default": "PROJ-.#####",
    "fieldname": "naming_series",
-   "fieldtype": "Select",
+   "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Series",
-   "no_copy": 1,
-   "options": "PROJ-.####",
-   "print_hide": 1,
-   "reqd": 1,
-   "set_only_once": 1
+   "reqd": 1
   },
   {
    "fieldname": "project_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Project Name",
    "reqd": 1,
    "unique": 1
@@ -38,30 +40,60 @@
    "in_standard_filter": 1,
    "label": "Status",
    "no_copy": 1,
-   "options": "Open\nCompleted\nCancelled",
+   "options": "Completed\nPending\nCustomer Side Pending",
+   "reqd": 1,
    "search_index": 1
   },
   {
    "fieldname": "customer_hd",
    "fieldtype": "Link",
    "label": "Customer hd",
-   "options": "Customer hd"
+   "options": "Customer hd",
+   "reqd": 1
   },
   {
    "fieldname": "start_date",
    "fieldtype": "Date",
-   "label": "Start Date"
+   "label": "Start Date",
+   "reqd": 1
   },
   {
    "fieldname": "end_date",
    "fieldtype": "Date",
-   "label": "End Date"
+   "label": "End Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "support_type",
+   "fieldtype": "Link",
+   "label": "Support Type",
+   "options": "Support Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "project_manager",
+   "fieldtype": "Link",
+   "label": "Project Manager",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "default_developer",
+   "fieldtype": "Link",
+   "label": "Default_Developer",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-02 15:24:28.734555",
+ "modified": "2026-07-06 00:02:19.689281",
  "modified_by": "Administrator",
  "module": "Help desk system",
  "name": "Project hd",
@@ -85,5 +117,7 @@
  "rows_threshold_for_grid_search": 20,
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "project_name",
+ "track_changes": 1
 }
