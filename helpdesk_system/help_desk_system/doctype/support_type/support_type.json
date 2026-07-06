@@ -36,7 +36,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-04 14:01:01.225327",
+ "modified": "2026-07-06 00:02:47.837266",
  "modified_by": "Administrator",
  "module": "Help desk system",
  "name": "Support Type",
@@ -60,5 +60,6 @@
  "rows_threshold_for_grid_search": 20,
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "support_type_name"
 }
