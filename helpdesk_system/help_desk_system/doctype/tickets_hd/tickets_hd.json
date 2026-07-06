@@ -1,0 +1,103 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-07-02 17:52:19.214688",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_aqtv",
+  "subject",
+  "description",
+  "customer",
+  "project",
+  "status",
+  "priority",
+  "assigned_agent",
+  "assigned_developer"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_aqtv",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "subject",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Subject",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "in_list_view": 1,
+   "label": "Description",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Link",
+   "label": "Status",
+   "options": "Status"
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Link",
+   "label": "Priority",
+   "options": "Priority"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer hd",
+   "reqd": 1
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project hd",
+   "reqd": 1
+  },
+  {
+   "fieldname": "assigned_agent",
+   "fieldtype": "Link",
+   "label": "Assigned Agent",
+   "options": "User"
+  },
+  {
+   "fieldname": "assigned_developer",
+   "fieldtype": "Link",
+   "label": "Assigned Developer",
+   "options": "User"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-03 15:03:33.865513",
+ "modified_by": "Administrator",
+ "module": "Help desk system",
+ "name": "Tickets Hd",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
