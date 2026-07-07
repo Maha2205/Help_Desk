@@ -1,10 +1,13 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "naming_series:",
  "creation": "2026-07-02 15:07:24.180120",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "customer_information_section",
+  "naming_series",
   "customer_name",
   "customer_type",
   "country",
@@ -62,8 +65,7 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Mobile No",
-   "options": "Phone",
-   "read_only": 1
+   "options": "Phone"
   },
   {
    "fieldname": "user",
@@ -71,15 +73,30 @@
    "label": "Portal User",
    "options": "User",
    "reqd": 1
+  },
+  {
+   "default": "CUST-.YYYY.-.#####",
+   "fieldname": "naming_series",
+   "fieldtype": "Data",
+   "label": "Series",
+   "options": "CUST-.YYYY.-.#####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer_information_section",
+   "fieldtype": "Section Break",
+   "label": "Customer Information"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
  "modified": "2026-07-06 13:16:06.977713",
+ "modified": "2026-07-07 12:40:48.428362",
  "modified_by": "Administrator",
  "module": "Help desk system",
  "name": "Customer hd",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
