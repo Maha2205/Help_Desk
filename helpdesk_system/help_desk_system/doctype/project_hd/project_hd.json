@@ -22,7 +22,6 @@
    "default": "PROJ-.#####",
    "fieldname": "naming_series",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Series",
    "reqd": 1
   },
@@ -66,6 +65,7 @@
   {
    "fieldname": "support_type",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Support Type",
    "options": "Support Type",
    "reqd": 1
@@ -73,6 +73,7 @@
   {
    "fieldname": "project_manager",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Project Manager",
    "options": "User",
    "reqd": 1
@@ -80,6 +81,7 @@
   {
    "fieldname": "default_developer",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Default_Developer",
    "options": "User",
    "reqd": 1
@@ -93,7 +95,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-06 00:02:19.689281",
+ "modified": "2026-07-06 14:53:27.416567",
  "modified_by": "Administrator",
  "module": "Help desk system",
  "name": "Project hd",

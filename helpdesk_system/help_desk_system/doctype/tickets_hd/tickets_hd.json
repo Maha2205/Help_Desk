@@ -6,31 +6,40 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_aqtv",
+  "general",
+  "ticket_information",
   "naming_series",
   "subject",
-  "description",
   "customer",
   "project",
   "support_type",
-  "status",
-  "priority",
-  "assigned_agent",
-  "assigned_developer",
   "ticket_raised_by",
-  "created_on",
+  "ticket_details_section",
+  "description",
+  "section_break_s7ky",
+  "priority",
+  "status",
+  "column_break_9ean",
+  "assignment",
+  "assignment_details",
+  "assigned_agent",
+  "column_break_85pp",
   "assigned_on",
+  "column_break_1bon",
+  "created_on",
+  "resolution",
+  "resolution_details_section",
   "resolved_on",
+  "column_break_91t7",
   "closed_on",
+  "section_break_u2h2",
   "resolution_details",
+  "section_break_1oyc",
   "customer_feedback",
+  "section_break_oq98",
   "reopen_reason"
  ],
  "fields": [
-  {
-   "fieldname": "section_break_aqtv",
-   "fieldtype": "Section Break"
-  },
   {
    "fieldname": "subject",
    "fieldtype": "Data",
@@ -42,7 +51,6 @@
   {
    "fieldname": "description",
    "fieldtype": "Text Editor",
-   "in_list_view": 1,
    "label": "Description",
    "reqd": 1
   },
@@ -50,8 +58,7 @@
    "default": "Open",
    "fieldname": "status",
    "fieldtype": "Link",
-   "in_filter": 1,
-   "in_standard_filter": 1,
+   "in_list_view": 1,
    "label": "Status",
    "options": "Status",
    "reqd": 1
@@ -84,6 +91,7 @@
    "reqd": 1
   },
   {
+   "depends_on": "eval:doc.__islocal==0",
    "fieldname": "assigned_agent",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -91,13 +99,7 @@
    "options": "User"
   },
   {
-   "fieldname": "assigned_developer",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Assigned Developer",
-   "options": "User"
-  },
-  {
+   "fetch_from": "project.support_type",
    "fieldname": "support_type",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -108,8 +110,12 @@
    "fieldname": "ticket_raised_by",
    "fieldtype": "Link",
    "label": "Ticket Raised By",
+<<<<<<< HEAD
    "options": "User",
    "read_only": 1
+=======
+   "options": "User"
+>>>>>>> a9861e0 (customize the doctype forms)
   },
   {
    "fieldname": "created_on",
@@ -162,14 +168,86 @@
    "default": "TICK-.YYYY.-.#####",
    "fieldname": "naming_series",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Series",
    "reqd": 1
+  },
+  {
+   "fieldname": "general",
+   "fieldtype": "Tab Break",
+   "label": "General"
+  },
+  {
+   "fieldname": "ticket_information",
+   "fieldtype": "Section Break",
+   "label": "Ticket Information"
+  },
+  {
+   "fieldname": "ticket_details_section",
+   "fieldtype": "Section Break",
+   "label": "Ticket Details"
+  },
+  {
+   "fieldname": "section_break_s7ky",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_9ean",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "assignment",
+   "fieldtype": "Tab Break",
+   "label": "Assignment"
+  },
+  {
+   "fieldname": "assignment_details",
+   "fieldtype": "Section Break",
+   "label": "Assignment Details"
+  },
+  {
+   "fieldname": "column_break_85pp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_1bon",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "resolution",
+   "fieldtype": "Tab Break",
+   "label": "Resolution"
+  },
+  {
+   "fieldname": "resolution_details_section",
+   "fieldtype": "Section Break",
+   "label": "Resolution Details"
+  },
+  {
+   "fieldname": "column_break_91t7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_u2h2",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_1oyc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_oq98",
+   "fieldtype": "Section Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2026-07-06 13:23:58.454189",
+=======
+ "modified": "2026-07-07 12:36:09.412830",
+>>>>>>> a9861e0 (customize the doctype forms)
  "modified_by": "Administrator",
  "module": "Help desk system",
  "name": "Tickets Hd",

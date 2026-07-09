@@ -18,7 +18,7 @@ function _get_customer(frm){
         if(r.message){
             
             frm.set_value("customer", r.message.name);
-            // frm.set_df_property("customer", "read_only", 1); 
+            frm.set_df_property("customer", "read_only", 1); 
         }
     });
 }
