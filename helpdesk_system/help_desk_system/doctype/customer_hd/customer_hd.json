@@ -1,13 +1,11 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "naming_series:",
+ "autoname": "field:customer_name",
  "creation": "2026-07-02 15:07:24.180120",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "customer_information_section",
-  "naming_series",
   "customer_name",
   "customer_type",
   "country",
@@ -15,24 +13,20 @@
   "primary_contact",
   "email_id",
   "mobile_no",
-  "user"
+  "portal_user"
  ],
  "fields": [
   {
    "fieldname": "customer_name",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Customer Name",
-   "reqd": 1,
    "unique": 1
   },
   {
    "fieldname": "customer_type",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Customer Type",
-   "options": "Company\nIndividual\nPartnership",
-   "reqd": 1
+   "options": "Company\nIndividual\nPartnership"
   },
   {
    "fieldname": "country",
@@ -54,49 +48,33 @@
    "description": "Enter the email id",
    "fieldname": "email_id",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Email Id",
    "options": "Email",
-   "reqd": 1
+   "read_only": 1
   },
   {
    "description": "Enter the Mobile number of the primary contact",
    "fieldname": "mobile_no",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Mobile No",
-   "options": "Phone"
+   "options": "Phone",
+   "read_only": 1
   },
   {
-   "fieldname": "user",
+   "fieldname": "portal_user",
    "fieldtype": "Link",
    "label": "Portal User",
-   "options": "User",
-   "reqd": 1
-  },
-  {
-   "default": "CUST-.YYYY.-.#####",
-   "fieldname": "naming_series",
-   "fieldtype": "Data",
-   "label": "Series",
-   "options": "CUST-.YYYY.-.#####",
-   "reqd": 1
-  },
-  {
-   "fieldname": "customer_information_section",
-   "fieldtype": "Section Break",
-   "label": "Customer Information"
+   "options": "User"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-06 13:16:06.977713",
- "modified": "2026-07-07 12:40:48.428362",
+ "modified": "2026-07-09 14:44:24.909443",
  "modified_by": "Administrator",
  "module": "Help desk system",
  "name": "Customer hd",
- "naming_rule": "By \"Naming Series\" field",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
@@ -116,7 +94,5 @@
  "rows_threshold_for_grid_search": 20,
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": [],
- "title_field": "customer_name",
- "track_changes": 1
+ "states": []
 }
