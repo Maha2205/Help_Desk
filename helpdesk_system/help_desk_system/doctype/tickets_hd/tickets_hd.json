@@ -6,46 +6,61 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_aqtv",
+  "general",
+  "ticket_information",
   "naming_series",
   "subject",
-  "description",
   "customer",
   "project",
   "support_type",
-  "status",
+  "ticket_details",
+  "description",
+  "section_break_lsww",
   "priority",
+  "column_break_2usk",
+  "status",
+  "column_break_4z9w",
+  "assignment",
+  "assigned_agent",
+  "column_break_uqt9",
+  "assigned_on",
+  "column_break_wp1z",
+  "ticket_raised_by",
+  "column_break_iukq",
+  "created_on",
   "sla_tab",
   "sla_details_section",
   "sla_policy",
   "first_response_due",
   "resolution_due",
-  "escalation_due",
-  "first_responded_on",
+  "column_break_mdyv",
   "sla_status",
+  "first_responded_on",
+  "escalation_due",
+  "sla_result",
   "response_breached",
+  "column_break_wone",
   "resolution_breached",
-  "assigned_agent",
-  "ticket_raised_by",
-  "created_on",
-  "assigned_on",
-  "resolved_on",
-  "closed_on",
+  "resolution",
   "resolution_details",
+  "resolved_on",
+  "column_break_wpuh",
+  "closed_on",
+  "resolution_detail",
+  "customer_confirmation",
   "customer_feedback",
   "reopen_reason",
+  "communication",
   "conversations"
  ],
  "fields": [
   {
-   "fieldname": "section_break_aqtv",
-   "fieldtype": "Section Break"
-  },
-  {
    "default": "TICK-.YYYY.-.#####",
    "fieldname": "naming_series",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Series",
+   "options": "TICK-.YYYY.-.#####",
    "reqd": 1
   },
   {
@@ -59,7 +74,6 @@
   {
    "fieldname": "description",
    "fieldtype": "Text Editor",
-   "in_list_view": 1,
    "label": "Description",
    "reqd": 1
   },
@@ -90,20 +104,18 @@
    "options": "Support Type"
   },
   {
-   "default": "Open",
    "fieldname": "status",
    "fieldtype": "Link",
-   "in_filter": 1,
-   "in_standard_filter": 1,
+   "in_list_view": 1,
    "label": "Status",
    "options": "Status",
    "reqd": 1
   },
   {
-   "default": "Medium",
    "fieldname": "priority",
    "fieldtype": "Link",
-   "in_list_view": 1,
+   "in_filter": 1,
+   "in_standard_filter": 1,
    "label": "Priority",
    "options": "Priority",
    "reqd": 1
@@ -111,8 +123,6 @@
   {
    "fieldname": "assigned_agent",
    "fieldtype": "Link",
-   "hidden": 1,
-   "in_list_view": 1,
    "label": "Assigned Agent",
    "options": "User"
   },
@@ -121,38 +131,40 @@
    "fieldtype": "Link",
    "label": "Ticket Raised By",
    "options": "User",
-   "read_only": 1
+   "permlevel": 1
   },
   {
    "fieldname": "created_on",
    "fieldtype": "Datetime",
    "label": "Created On",
+   "permlevel": 1,
    "read_only": 1
   },
   {
    "fieldname": "assigned_on",
    "fieldtype": "Datetime",
    "label": "Assigned On",
+   "permlevel": 1,
    "read_only": 1
   },
   {
    "fieldname": "resolved_on",
    "fieldtype": "Datetime",
    "label": "Resolved On",
+   "permlevel": 1,
    "read_only": 1
   },
   {
    "fieldname": "closed_on",
    "fieldtype": "Datetime",
    "label": "Closed On",
+   "permlevel": 1,
    "read_only": 1
   },
   {
    "fieldname": "resolution_details",
-   "fieldtype": "Text Editor",
-   "hidden": 1,
-   "label": "Resolution Details",
-   "mandatory_depends_on": "eval:doc.status==\"Resolved\" || doc.status==\"Closed\""
+   "fieldtype": "Section Break",
+   "label": "Resolution Details"
   },
   {
    "depends_on": "eval:doc.status==\"Closed\"",
@@ -191,37 +203,42 @@
    "fieldtype": "Link",
    "label": "Sla Policy",
    "options": "SLA Policy",
+   "permlevel": 1,
    "read_only": 1
   },
   {
    "fieldname": "first_response_due",
    "fieldtype": "Datetime",
    "label": "First Response Due",
+   "permlevel": 1,
    "read_only": 1
   },
   {
    "fieldname": "resolution_due",
    "fieldtype": "Datetime",
    "label": "Resolution Due",
+   "permlevel": 1,
    "read_only": 1
   },
   {
    "fieldname": "escalation_due",
    "fieldtype": "Datetime",
-   "label": "Escalation Due"
+   "label": "Escalation Due",
+   "permlevel": 1
   },
   {
+   "alignment": "Right",
    "fieldname": "sla_status",
-   "fieldtype": "Select",
+   "fieldtype": "Data",
    "label": "SLA Status",
-   "options": "Within SLA\nFirst Response Breached\nResolution Breached\nCompleted",
-   "read_only": 1
+   "options": "Within SLA\nFirst ResponseBreached\nResolution Breached\nCompleted"
   },
   {
    "default": "Unchecked",
    "fieldname": "response_breached",
    "fieldtype": "Check",
    "label": "Response Breached",
+   "permlevel": 1,
    "read_only": 1
   },
   {
@@ -229,18 +246,103 @@
    "fieldname": "resolution_breached",
    "fieldtype": "Check",
    "label": "Resolution Breached",
+   "permlevel": 1,
    "read_only": 1
   },
   {
    "fieldname": "first_responded_on",
    "fieldtype": "Datetime",
-   "label": "First Responded On"
+   "label": "First Responded On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "general",
+   "fieldtype": "Tab Break",
+   "label": "General"
+  },
+  {
+   "fieldname": "ticket_information",
+   "fieldtype": "Section Break",
+   "label": "Ticket Information"
+  },
+  {
+   "fieldname": "ticket_details",
+   "fieldtype": "Section Break",
+   "label": "Ticket Details"
+  },
+  {
+   "fieldname": "section_break_lsww",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_4z9w",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "assignment",
+   "fieldtype": "Tab Break",
+   "label": "Assignment"
+  },
+  {
+   "fieldname": "column_break_uqt9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_wp1z",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_2usk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_wone",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "resolution",
+   "fieldtype": "Tab Break",
+   "label": "Resolution"
+  },
+  {
+   "fieldname": "column_break_wpuh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "resolution_detail",
+   "fieldtype": "Text Editor",
+   "hidden": 1,
+   "label": "Resolution Detail",
+   "mandatory_depends_on": "eval:doc.status==\"Resolved\" || doc.status==\"Closed\""
+  },
+  {
+   "fieldname": "customer_confirmation",
+   "fieldtype": "Section Break",
+   "label": "Customer Confirmation"
+  },
+  {
+   "fieldname": "communication",
+   "fieldtype": "Section Break",
+   "label": "Communication "
+  },
+  {
+   "fieldname": "column_break_mdyv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sla_result",
+   "fieldtype": "Section Break",
+   "label": "SLA Result"
+  },
+  {
+   "fieldname": "column_break_iukq",
+   "fieldtype": "Column Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-09 16:52:01.436560",
+ "modified": "2026-07-11 13:40:06.758691",
  "modified_by": "Administrator",
  "module": "Help desk system",
  "name": "Tickets Hd",
