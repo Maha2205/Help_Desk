@@ -4,7 +4,11 @@ app_publisher = "mahalakshmi"
 app_description = "Help desk management"
 app_email = "mahalakshmi21ph12@gmail.com"
 app_license = "mit"
-
+fixtures = [
+    {"doctype": "Workflow"},
+    {"doctype": "Workflow State"},
+    {"doctype": "Workflow Action Master"}
+]
 # Apps
 # ------------------
 
@@ -157,7 +161,7 @@ app_license = "mit"
 # 		"helpdesk_system.tasks.daily"
 # 	],
 # 	"hourly": [
-# 		"helpdesk_system.tasks.hourly"
+# 		"helpdesk_system.sla_jobs.check_sla_breaches"
 # 	],
 # 	"weekly": [
 # 		"helpdesk_system.tasks.weekly"
