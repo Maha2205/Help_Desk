@@ -1,14 +1,13 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "naming_series:",
+ "autoname": "field:project_name",
  "creation": "2026-07-02 14:45:45.617812",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "naming_series",
+  "customer",
   "project_name",
-  "customer_hd",
   "support_type",
   "status",
   "start_date",
@@ -18,13 +17,6 @@
   "description"
  ],
  "fields": [
-  {
-   "default": "PROJ-.#####",
-   "fieldname": "naming_series",
-   "fieldtype": "Data",
-   "label": "Series",
-   "reqd": 1
-  },
   {
    "fieldname": "project_name",
    "fieldtype": "Data",
@@ -42,13 +34,6 @@
    "options": "Completed\nPending\nCustomer Side Pending",
    "reqd": 1,
    "search_index": 1
-  },
-  {
-   "fieldname": "customer_hd",
-   "fieldtype": "Link",
-   "label": "Customer hd",
-   "options": "Customer hd",
-   "reqd": 1
   },
   {
    "fieldname": "start_date",
@@ -90,16 +75,23 @@
    "fieldname": "description",
    "fieldtype": "Text Editor",
    "label": "Description"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer hd",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-06 14:53:27.416567",
+ "modified": "2026-07-13 18:08:27.440774",
  "modified_by": "Administrator",
  "module": "Help desk system",
  "name": "Project hd",
- "naming_rule": "By \"Naming Series\" field",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
@@ -120,6 +112,5 @@
  "sort_field": "creation",
  "sort_order": "DESC",
  "states": [],
- "title_field": "project_name",
  "track_changes": 1
 }

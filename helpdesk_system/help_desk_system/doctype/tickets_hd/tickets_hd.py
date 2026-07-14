@@ -3,25 +3,7 @@
 
 import frappe
 from frappe.model.document import Document
-
-
-class TicketsHd(Document):
-    def validate(self):
-        if self.project:
-            project = frappe.get_doc("Project hd", self.project)
-
-            if project.support_type == "Ad Hoc":
-                frappe.throw(
-                    "This project is under Ad Hoc support. Customers cannot raise tickets."
-                )
-                
-# Copyright (c) 2026, mahalakshmi and contributors
-# For license information, please see license.txt
-
-import frappe
-from frappe.model.document import Document
 from frappe.utils import add_to_date, now_datetime
-
 
 # Change this to the actual enabled HelpDesk Agent User email.
 DEFAULT_AGENT = "monishaa101@gmail.com"
@@ -69,20 +51,19 @@ class TicketsHd(Document):
         if not self.status:
             self.status = "Open"
 
+    # ---------------------------------------------------------
+    # Ad Hoc Validation
+    # ---------------------------------------------------------
+
     def validate_ad_hoc_project(self):
         if not self.project:
             return
 
-        support_type = frappe.db.get_value(
-            "Project hd",
-            self.project,
-            "support_type"
-        )
+        project = frappe.get_doc("Project hd", self.project)
 
-        if support_type == "Ad Hoc":
+        if project.support_type == "Ad Hoc":
             frappe.throw(
-                "This project is under Ad Hoc support. "
-                "Customers cannot raise tickets."
+                "This project is under Ad Hoc support. Customers cannot raise tickets."
             )
 
     # ---------------------------------------------------------
@@ -108,34 +89,13 @@ class TicketsHd(Document):
                 <table border="1" cellpadding="6"
                        cellspacing="0"
                        style="border-collapse: collapse;">
-                    <tr>
-                        <td><b>Ticket ID</b></td>
-                        <td>{self.name}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Subject</b></td>
-                        <td>{self.subject or ""}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Customer</b></td>
-                        <td>{self.customer or ""}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Project</b></td>
-                        <td>{self.project or ""}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Support Type</b></td>
-                        <td>{self.support_type or ""}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Priority</b></td>
-                        <td>{self.priority or ""}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Status</b></td>
-                        <td>{self.status or "Open"}</td>
-                    </tr>
+                    <tr><td><b>Ticket ID</b></td><td>{self.name}</td></tr>
+                    <tr><td><b>Subject</b></td><td>{self.subject or ""}</td></tr>
+                    <tr><td><b>Customer</b></td><td>{self.customer or ""}</td></tr>
+                    <tr><td><b>Project</b></td><td>{self.project or ""}</td></tr>
+                    <tr><td><b>Support Type</b></td><td>{self.support_type or ""}</td></tr>
+                    <tr><td><b>Priority</b></td><td>{self.priority or ""}</td></tr>
+                    <tr><td><b>Status</b></td><td>{self.status or "Open"}</td></tr>
                 </table>
 
                 <p>Please log in and start working on this ticket.</p>
@@ -160,7 +120,6 @@ class TicketsHd(Document):
         old_state = old_doc.workflow_state or old_doc.status
         new_state = self.workflow_state or self.status
 
-        # Send only when the ticket changes into Resolved.
         if old_state == "Resolved" or new_state != "Resolved":
             return
 
@@ -179,13 +138,12 @@ class TicketsHd(Document):
             message=f"""
                 <p>Dear Customer,</p>
 
-                <p>
-                    Your helpdesk ticket has been successfully resolved.
-                </p>
+                <p>Your helpdesk ticket has been successfully resolved.</p>
 
                 <p><b>Ticket ID:</b> {self.name}</p>
                 <p><b>Subject:</b> {self.subject or ""}</p>
                 <p><b>Status:</b> Resolved</p>
+
                 <p>
                     <b>Resolution:</b><br>
                     {self.resolution_detail or ""}
@@ -199,10 +157,7 @@ class TicketsHd(Document):
         )
 
     def get_customer_email(self):
-        if (
-            self.ticket_raised_by
-            and self.ticket_raised_by != "Guest"
-        ):
+        if self.ticket_raised_by and self.ticket_raised_by != "Guest":
             return self.ticket_raised_by
 
         if self.customer:
@@ -291,10 +246,7 @@ class TicketsHd(Document):
             self.sla_status = "Completed"
             return
 
-        if (
-            self.resolution_due
-            and current_time > self.resolution_due
-        ):
+        if self.resolution_due and current_time > self.resolution_due:
             self.resolution_breached = 1
             self.sla_status = "Resolution Breached"
             return
