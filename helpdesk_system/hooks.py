@@ -158,7 +158,7 @@ fixtures = [
 # 		"helpdesk_system.tasks.all"
 # 	],
 # 	"daily": [
-# 		"helpdesk_system.tasks.daily"
+# 		"helpdesk_system.warranty_jobs.send_warranty_amc_notifications"
 # 	],
 # 	"hourly": [
 # 		"helpdesk_system.sla_jobs.check_sla_breaches"
@@ -170,7 +170,11 @@ fixtures = [
 # 		"helpdesk_system.tasks.monthly"
 # 	],
 # }
-
+scheduler_events = {
+    "daily": [
+        "helpdesk_system.warranty_jobs.send_warranty_amc_emails"
+    ]
+}
 # Testing
 # -------
 

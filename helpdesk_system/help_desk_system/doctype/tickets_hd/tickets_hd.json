@@ -36,7 +36,6 @@
   "column_break_mdyv",
   "sla_status",
   "first_responded_on",
-  "escalation_due",
   "sla_result",
   "response_breached",
   "column_break_wone",
@@ -51,7 +50,8 @@
   "customer_feedback",
   "reopen_reason",
   "communication",
-  "conversations"
+  "conversations",
+  "amended_from"
  ],
  "fields": [
   {
@@ -123,6 +123,7 @@
    "options": "User"
   },
   {
+   "fetch_from": "customer.portal_user",
    "fieldname": "ticket_raised_by",
    "fieldtype": "Link",
    "label": "Ticket Raised By",
@@ -204,7 +205,7 @@
   {
    "fieldname": "first_response_due",
    "fieldtype": "Datetime",
-   "label": "First Response Due",
+   "label": " Response Due",
    "permlevel": 1,
    "read_only": 1
   },
@@ -216,17 +217,11 @@
    "read_only": 1
   },
   {
-   "fieldname": "escalation_due",
-   "fieldtype": "Datetime",
-   "label": "Escalation Due",
-   "permlevel": 1
-  },
-  {
    "alignment": "Right",
    "fieldname": "sla_status",
    "fieldtype": "Data",
    "label": "SLA Status",
-   "options": "Within SLA\nFirst ResponseBreached\nResolution Breached\nCompleted"
+   "options": "Within SLA\nFirst Response Breached\nResolution Breached\nCompleted"
   },
   {
    "default": "Unchecked",
@@ -248,7 +243,7 @@
    "fieldname": "first_responded_on",
    "fieldtype": "Datetime",
    "in_list_view": 1,
-   "label": "First Responded On",
+   "label": " Responded On",
    "read_only": 1
   },
   {
@@ -333,12 +328,22 @@
   {
    "fieldname": "column_break_iukq",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Tickets Hd",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-13 16:41:47.976298",
+ "modified": "2026-07-15 16:36:49.594250",
  "modified_by": "Administrator",
  "module": "Help desk system",
  "name": "Tickets Hd",

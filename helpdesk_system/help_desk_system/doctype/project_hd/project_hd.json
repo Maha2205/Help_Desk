@@ -14,7 +14,8 @@
   "end_date",
   "project_manager",
   "default_developer",
-  "description"
+  "description",
+  "customer_email"
  ],
  "fields": [
   {
@@ -67,7 +68,7 @@
    "fieldname": "default_developer",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Default_Developer",
+   "label": "Developer",
    "options": "User",
    "reqd": 1
   },
@@ -82,12 +83,19 @@
    "label": "Customer",
    "options": "Customer hd",
    "reqd": 1
+  },
+  {
+   "fetch_from": "customer.portal_user",
+   "fieldname": "customer_email",
+   "fieldtype": "Data",
+   "label": "Customer_Email",
+   "options": "Email"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-13 18:08:27.440774",
+ "modified": "2026-07-15 12:01:04.235398",
  "modified_by": "Administrator",
  "module": "Help desk system",
  "name": "Project hd",

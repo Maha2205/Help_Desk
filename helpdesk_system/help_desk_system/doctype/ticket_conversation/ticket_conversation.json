@@ -15,23 +15,27 @@
   {
    "fieldname": "note_type",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Note Type",
    "options": "Customer Reply\nInternal Note"
   },
   {
    "fieldname": "message",
    "fieldtype": "Text",
+   "in_list_view": 1,
    "label": "Message"
   },
   {
    "fieldname": "added_by",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Added By",
    "options": "User"
   },
   {
    "fieldname": "date",
    "fieldtype": "Datetime",
+   "in_list_view": 1,
    "label": "Date"
   }
  ],
@@ -39,7 +43,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-07-08 12:45:42.556904",
+ "modified": "2026-07-15 17:26:41.042223",
  "modified_by": "Administrator",
  "module": "Help desk system",
  "name": "Ticket Conversation",

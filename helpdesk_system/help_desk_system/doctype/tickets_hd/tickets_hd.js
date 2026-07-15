@@ -1,8 +1,24 @@
 frappe.ui.form.on("Tickets Hd", {
 
     onload(frm) {
+
         setup_customer_ticket(frm);
+
+        // Show only Ad Hoc projects for HelpDesk Agent
+        if (frappe.user.has_role("HelpDesk Agent")) {
+
+            frm.set_query("project", function () {
+                return {
+                    filters: {
+                        support_type: "Ad Hoc"
+                    }
+                };
+            });
+
+        }
+
     },
+
 
     refresh(frm) {
 
@@ -10,98 +26,212 @@ frappe.ui.form.on("Tickets Hd", {
 
         show_workflow_message(frm);
 
-        // Run only for customer
-        if (!frappe.user.has_role("HelpDesk Customer")) {
-            return;
+
+
+        // ==========================
+        // CUSTOMER LOGIN
+        // ==========================
+
+        if (frappe.user.has_role("HelpDesk Customer")) {
+
+
+            frm.set_df_property(
+                "resolution_detail",
+                "reqd",
+                0
+            );
+
+
+            // Read only fields
+            [
+                "customer",
+                "support_type",
+                "status",
+                "assigned_agent",
+                "assigned_on",
+                "ticket_raised_by",
+                "created_on",
+                "resolved_on",
+                "closed_on",
+                "sla_policy",
+                "first_response_due",
+                "resolution_due",
+                "sla_status",
+                "first_responded_on",
+                "response_breached",
+                "resolution_breached"
+            ].forEach(field => {
+
+                frm.set_df_property(
+                    field,
+                    "read_only",
+                    1
+                );
+
+            });
+
+
+
+            if (frm.is_new()) {
+
+
+                frm.toggle_display("assignment", false);
+                frm.toggle_display("sla_tab", false);
+                frm.toggle_display("resolution", false);
+
+
+                frm.toggle_display("status", false);
+
+                frm.toggle_display("assigned_agent", false);
+                frm.toggle_display("assigned_on", false);
+                frm.toggle_display("ticket_raised_by", false);
+
+
+                frm.toggle_display("sla_policy", false);
+                frm.toggle_display("first_response_due", false);
+                frm.toggle_display("resolution_due", false);
+                frm.toggle_display("sla_status", false);
+                frm.toggle_display("first_responded_on", false);
+                frm.toggle_display("escalation_due", false);
+                frm.toggle_display("response_breached", false);
+                frm.toggle_display("resolution_breached", false);
+
+
+                frm.toggle_display("resolved_on", false);
+                frm.toggle_display("closed_on", false);
+
+
+                frm.toggle_display("resolution_detail", false);
+                frm.toggle_display("customer_feedback", false);
+                frm.toggle_display("reopen_reason", false);
+                frm.toggle_display("communication", false);
+
+
+            } else {
+
+
+                frm.toggle_display("status", true);
+
+                frm.toggle_display("assignment", true);
+
+                frm.toggle_display("assigned_agent", true);
+                frm.toggle_display("assigned_on", true);
+
+                frm.toggle_display("communication", true);
+
+
+
+                if (
+                    frm.doc.status === "Resolved" ||
+                    frm.doc.status === "Closed"
+                ) {
+
+
+                    frm.toggle_display(
+                        "resolution",
+                        true
+                    );
+
+
+                    frm.toggle_display(
+                        "customer_feedback",
+                        true
+                    );
+
+
+                } else {
+
+
+                    frm.toggle_display(
+                        "customer_feedback",
+                        false
+                    );
+
+
+                }
+
+
+
+                if (frm.doc.status === "Reopened") {
+
+
+                    frm.toggle_display(
+                        "reopen_reason",
+                        true
+                    );
+
+
+                } else {
+
+
+                    frm.toggle_display(
+                        "reopen_reason",
+                        false
+                    );
+
+
+                }
+
+            }
+
         }
 
-        // Read only fields
-        [
-            "customer",
-            "support_type",
-            "status",
-            "assigned_agent",
-            "assigned_on",
-            "ticket_raised_by",
-            "created_on",
-            "resolved_on",
-            "closed_on",
-            "sla_policy",
-            "first_response_due",
-            "resolution_due",
-            "sla_status",
-            "first_responded_on",
-            "response_breached",
-            "resolution_breached"
-        ].forEach(field => {
-            frm.set_df_property(field, "read_only", 1);
-        });
 
-        if (frm.is_new()) {
 
-            // Hide tabs before ticket creation
-            frm.toggle_display("assignment", false);
-            frm.toggle_display("sla_tab", false);
-            frm.toggle_display("resolution", false);
+        // ==========================
+        // AGENT LOGIN
+        // ==========================
 
-            // Hide fields
-            frm.toggle_display("status", false);
+        if (frappe.user.has_role("HelpDesk Agent")) {
 
-            frm.toggle_display("assigned_agent", false);
-            frm.toggle_display("assigned_on", false);
-            frm.toggle_display("ticket_raised_by", false);
-
-            frm.toggle_display("sla_policy", false);
-            frm.toggle_display("first_response_due", false);
-            frm.toggle_display("resolution_due", false);
-            frm.toggle_display("sla_status", false);
-            frm.toggle_display("first_responded_on", false);
-            frm.toggle_display("escalation_due", false);
-            frm.toggle_display("response_breached", false);
-            frm.toggle_display("resolution_breached", false);
-
-            frm.toggle_display("resolved_on", false);
-            frm.toggle_display("closed_on", false);
-
-            frm.toggle_display("resolution_detail", false);
-            frm.toggle_display("customer_feedback", false);
-            frm.toggle_display("reopen_reason", false);
-            frm.toggle_display("communication", false);
-
-        } else {
-
-            // Show assignment after submit
-            frm.toggle_display("status", true);
-
-            frm.toggle_display("assignment", true);
-
-            frm.toggle_display("assigned_agent", true);
-            frm.toggle_display("assigned_on", true);
-
-            frm.toggle_display("communication", true);
 
             if (
                 frm.doc.status === "Resolved" ||
                 frm.doc.status === "Closed"
             ) {
 
-                frm.toggle_display("resolution", true);
 
-                frm.toggle_display("customer_feedback", true);
+                frm.toggle_display(
+                    "resolution",
+                    true
+                );
+
+
+                frm.toggle_display(
+                    "resolution_detail",
+                    true
+                );
+
+
+                frm.set_df_property(
+                    "resolution_detail",
+                    "read_only",
+                    0
+                );
+
+
+                frm.set_df_property(
+                    "resolution_detail",
+                    "reqd",
+                    1
+                );
+
 
             } else {
 
-                frm.toggle_display("customer_feedback", false);
 
-            }
+                frm.toggle_display(
+                    "resolution_detail",
+                    false
+                );
 
-            if (frm.doc.status === "Reopened") {
 
-                frm.toggle_display("reopen_reason", true);
+                frm.set_df_property(
+                    "resolution_detail",
+                    "reqd",
+                    0
+                );
 
-            } else {
-
-                frm.toggle_display("reopen_reason", false);
 
             }
 
@@ -109,87 +239,134 @@ frappe.ui.form.on("Tickets Hd", {
 
     },
 
-    before_workflow_action: async function(frm) {
 
-        const action = frm.selected_workflow_action;
 
-        if (["Close", "Reopen"].includes(action)) {
+    // ==========================
+    // VALIDATE AGENT RESOLUTION
+    // ==========================
 
-            const confirmed = await new Promise(resolve => {
+    validate(frm) {
 
-                frappe.confirm(
 
-                    __("Are you sure?"),
+        if (frappe.user.has_role("HelpDesk Agent")) {
 
-                    () => resolve(true),
 
-                    () => resolve(false)
+            if (frm.doc.status === "Resolved") {
 
-                );
 
-            });
+                if (!frm.doc.resolution_detail) {
 
-            if (!confirmed) {
 
-                frappe.throw(__("Action Cancelled"));
+                    frappe.throw(
+                        __("Please enter Resolution Details before resolving the ticket.")
+                    );
+
+
+                }
 
             }
 
         }
 
-    }
 
+    },
+
+
+//bv//
 });
+
+
+
 
 
 function setup_customer_ticket(frm) {
 
+
     if (!frappe.user.has_role("HelpDesk Customer")) {
+
         return;
+
     }
 
+
+
     frappe.db.get_value(
+
         "Customer hd",
+
         {
             portal_user: frappe.session.user
         },
+
         "name"
+
     ).then(r => {
+
+
 
         if (!r.message) {
 
-            frappe.msgprint(__("Customer record not found."));
+
+            frappe.msgprint(
+                __("Customer record not found.")
+            );
+
 
             return;
 
+
         }
 
-        frm.set_value("customer", r.message.name);
 
-        frm.set_df_property("customer", "read_only", 1);
 
-        frm.set_query("project", function () {
+        frm.set_value(
+            "customer",
+            r.message.name
+        );
 
-            return {
 
-                filters: {
 
-                    customer: r.message.name
+        frm.set_df_property(
+            "customer",
+            "read_only",
+            1
+        );
 
-                }
 
-            };
 
-        });
+        frm.set_query(
+            "project",
+            function () {
+
+                return {
+
+                    filters: {
+
+                        customer: r.message.name
+
+                    }
+
+                };
+
+            }
+
+        );
+
 
     });
+
 
 }
 
 
+
+
+
 function show_workflow_message(frm) {
 
+
     switch (frm.doc.workflow_state) {
+
 
         case "Open":
 
@@ -203,6 +380,8 @@ function show_workflow_message(frm) {
 
             break;
 
+
+
         case "Assigned":
 
             frappe.show_alert({
@@ -214,6 +393,8 @@ function show_workflow_message(frm) {
             });
 
             break;
+
+
 
         case "In Progress":
 
@@ -227,6 +408,8 @@ function show_workflow_message(frm) {
 
             break;
 
+
+
         case "Resolved":
 
             frappe.show_alert({
@@ -238,6 +421,8 @@ function show_workflow_message(frm) {
             });
 
             break;
+
+
 
         case "Reopened":
 
@@ -251,6 +436,8 @@ function show_workflow_message(frm) {
 
             break;
 
+
+
         case "Closed":
 
             frappe.show_alert({
@@ -262,6 +449,7 @@ function show_workflow_message(frm) {
             });
 
             break;
+
 
     }
 
