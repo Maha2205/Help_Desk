@@ -11,6 +11,9 @@ frappe.ui.form.on("Tickets Hd", {
         if (!frm.doc.workflow_state) {
             frm.set_value("workflow_state", "Open");
         }
+        if (frm.is_new() && frappe.user.has_role("HelpDesk Agent")) {
+    frm.set_value("support_type", "Ad Hoc");
+}
     }
 
     if (frappe.user.has_role("HelpDesk Agent")) {
@@ -118,21 +121,43 @@ frappe.ui.form.on("Tickets Hd", {
 
         if (frappe.user.has_role("HelpDesk Agent")) {
 
-            if (frm.doc.status === "Resolved" || frm.doc.status === "Closed") {
+    // Show button only for new Ad Hoc tickets
+    if (frm.is_new() && frm.doc.support_type === "Ad Hoc") {
 
-                frm.toggle_display("resolution", true);
-                frm.toggle_display("resolution_detail", true);
-                frm.set_df_property("resolution_detail", "read_only", 0);
-                frm.set_df_property("resolution_detail", "reqd", 1);
+        frm.fields_dict.customer.$wrapper.find(".adhoc-btn").remove();
 
-            } else {
+if (frm.is_new() && frm.doc.support_type === "Ad Hoc") {
 
-                frm.toggle_display("resolution_detail", false);
-                frm.set_df_property("resolution_detail", "reqd", 0);
+    let btn = $(`
+        <button class="btn btn-xs btn-default adhoc-btn" style="margin-top:6px;">
+            + New Customer
+        </button>
+    `);
 
-            }
+    btn.on("click", function () {
+        open_adhoc_dialog(frm);
+    });
 
-        }
+frm.fields_dict.customer.$input_wrapper.append(btn);}
+
+    }
+
+    // Show resolution fields only for Resolved or Closed tickets
+    if (frm.doc.status === "Resolved" || frm.doc.status === "Closed") {
+
+        frm.toggle_display("resolution", true);
+        frm.toggle_display("resolution_detail", true);
+        frm.set_df_property("resolution_detail", "read_only", 0);
+        frm.set_df_property("resolution_detail", "reqd", 1);
+
+    } else {
+
+        frm.toggle_display("resolution_detail", false);
+        frm.set_df_property("resolution_detail", "reqd", 0);
+
+    }
+
+}
 
     },
 
@@ -394,5 +419,74 @@ function validate_project_support_period(frm) {
         );
 
     });
+
+}
+function open_adhoc_dialog(frm) {
+
+    let dialog = new frappe.ui.Dialog({
+        title: __("Create Ad Hoc Customer"),
+        fields: [
+            {
+                fieldname: "customer_name",
+                label: "Customer Name",
+                fieldtype: "Data",
+                reqd: 1
+            },
+            {
+                fieldname: "project_name",
+                label: "Project Name",
+                fieldtype: "Data",
+                reqd: 1
+            },
+            {
+                fieldname: "email_id",
+                label: "Email",
+                fieldtype: "Data"
+            },
+            {
+                fieldname: "mobile_no",
+                label: "Mobile",
+                fieldtype: "Data"
+            }
+        ],
+
+        primary_action_label: __("Create & Use"),
+
+        primary_action(values) {
+
+    frappe.call({
+        method: "helpdesk_system.api.create_adhoc_customer_project",
+        args: {
+            data: values
+        },
+
+        freeze: true,
+        freeze_message: __("Creating Customer & Project..."),
+
+        callback: function(r) {
+
+            if (!r.message) {
+                return;
+            }
+
+            frm.set_value("customer", r.message.customer);
+            frm.set_value("project", r.message.project);
+
+            dialog.hide();
+
+            frappe.show_alert({
+                message: __("Customer & Project Created Successfully"),
+                indicator: "green"
+            });
+
+        }
+
+    });
+
+}
+
+    });
+
+    dialog.show();
 
 }

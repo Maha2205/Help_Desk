@@ -31,6 +31,7 @@ fixtures = [
 # include js, css files in header of desk.html
 # app_include_css = "/assets/helpdesk_system/css/helpdesk_system.css"
 # app_include_js = "/assets/helpdesk_system/js/helpdesk_system.js"
+app_include_js = "/assets/helpdesk_system/js/startup_redirect.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/helpdesk_system/css/helpdesk_system.css"
@@ -172,7 +173,7 @@ fixtures = [
 # }
 scheduler_events = {
     "daily": [
-        "helpdesk_system.warranty_jobs.send_warranty_amc_emails"
+        "helpdesk_system.warranty_jobs.send_warranty_amc_notifications"
     ]
 }
 # Testing
@@ -267,4 +268,3 @@ scheduler_events = {
 permission_query_conditions = {
     "Tickets Hd": "helpdesk_system.permissions.get_ticket_permission_query"
 }
-

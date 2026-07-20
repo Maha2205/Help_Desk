@@ -9,7 +9,6 @@
   "customer",
   "project_name",
   "support_type",
-  "status",
   "start_date",
   "end_date",
   "project_manager",
@@ -27,26 +26,16 @@
    "unique": 1
   },
   {
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "in_standard_filter": 1,
-   "label": "Status",
-   "no_copy": 1,
-   "options": "Completed\nPending\nCustomer Side Pending",
-   "reqd": 1,
-   "search_index": 1
-  },
-  {
    "fieldname": "start_date",
    "fieldtype": "Date",
    "label": "Start Date",
-   "reqd": 1
+   "mandatory_depends_on": "doc.support_type != \"Ad Hoc\""
   },
   {
    "fieldname": "end_date",
    "fieldtype": "Date",
    "label": "End Date",
-   "reqd": 1
+   "mandatory_depends_on": "doc.support_type != \"Ad Hoc\""
   },
   {
    "fieldname": "support_type",
@@ -61,16 +50,16 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Project Manager",
-   "options": "User",
-   "reqd": 1
+   "mandatory_depends_on": "doc.support_type != \"Ad Hoc\"",
+   "options": "User"
   },
   {
    "fieldname": "default_developer",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Developer",
-   "options": "User",
-   "reqd": 1
+   "mandatory_depends_on": "doc.support_type != \"Ad Hoc\"",
+   "options": "User"
   },
   {
    "fieldname": "description",
@@ -95,7 +84,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-15 12:01:04.235398",
+ "modified": "2026-07-20 15:57:37.193305",
  "modified_by": "Administrator",
  "module": "Help desk system",
  "name": "Project hd",
