@@ -1,6 +1,6 @@
 import frappe
 from frappe.model.document import Document
-from frappe.utils import now_datetime
+from frappe.utils import getdate, now_datetime, today
 
 
 DEFAULT_AGENT = "monishaa101@gmail.com"
@@ -22,18 +22,25 @@ class TicketsHd(Document):
             self.workflow_state = "Open"
 
     def validate(self):
-        self.validate_ad_hoc_project()
+        self.validate_project_support()
         self.sync_status_with_workflow()
 
-    def validate_ad_hoc_project(self):
-        if not self.project:
+    def validate_project_support(self):
+        if not self.project or not self.customer:
             return
 
-        support_type = frappe.db.get_value(
+        project_details = frappe.db.get_value(
             "Project hd",
             self.project,
-            "support_type"
+            [
+                "support_type",
+                "end_date"
+            ],
+            as_dict=True
         )
+
+        if not project_details:
+            return
 
         customer_user = frappe.db.get_value(
             "Customer hd",
@@ -41,10 +48,29 @@ class TicketsHd(Document):
             "portal_user"
         )
 
-        if frappe.session.user == customer_user and support_type == "Ad Hoc":
+        # Apply this restriction only when the customer is logged in
+        if frappe.session.user != customer_user:
+            return
+
+        # Ad Hoc customers cannot raise tickets
+        if project_details.support_type == "Ad Hoc":
             frappe.throw(
                 "This project is under Ad Hoc support. "
-                "Customers cannot raise tickets."
+                " Dear Customer you can't raise tickets please contact the admin."
+            )
+
+        # Check the common End Date for AMC and Warranty
+        if (
+            project_details.support_type in ["AMC", "Warranty"]
+            and project_details.end_date
+            and getdate(project_details.end_date) <= getdate(today())
+        ):
+            frappe.throw(
+                f"The {project_details.support_type} support period "
+                f"for this project expired on "
+                f"{project_details.end_date}. "
+                "You cannot raise a new ticket. "
+                "Please contact the administrator."
             )
 
     def sync_status_with_workflow(self):
@@ -55,8 +81,8 @@ class TicketsHd(Document):
             if not self.first_responded_on:
                 self.first_responded_on = now_datetime()
 
-        elif self.workflow_state == "In Progress":
-            self.status = "In Progress"
+        elif self.workflow_state == "In progress":
+            self.status = "In progress"
 
             if not self.first_responded_on:
                 self.first_responded_on = now_datetime()
